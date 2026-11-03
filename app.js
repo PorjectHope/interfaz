@@ -3,12 +3,12 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { loadArtwork } from './src/artwork.js';
-import { buildLogo } from './src/logoGeometry.js';
-import { buildTitle } from './src/titleGlass.js';
-import { Starfield } from './src/starfield.js';
-import { Constellation, ROLEPLAY, V1 } from './src/constellation.js';
-import { SongPlayer } from './src/audio.js';
+import { loadArtwork } from './artwork.js';
+import { buildLogo } from './logoGeometry.js';
+import { buildTitle } from './titleGlass.js';
+import { Starfield } from './starfield.js';
+import { Constellation, ROLEPLAY, V1 } from './constellation.js';
+import { SongPlayer } from './audio.js';
 
 const CAM_Z = 10;
 const LAYOUT = {
@@ -204,7 +204,7 @@ let shootTimer = null;
 let constellations = [];
 let constellationIndex = 0;
 let constellationTimer = null;
-const song = new SongPlayer('./assets/welcome-project-hope.mp3');
+const song = new SongPlayer('./welcome-project-hope.mp3');
 
 function layoutScene() {
   const w = window.innerWidth;
@@ -396,14 +396,14 @@ async function loadFont(url) {
 
 async function boot() {
   if (!window.opentype) throw new Error('opentype.js no se cargó desde el CDN');
-  const artwork = await loadArtwork('./assets/Logo-sin-destellos.png');
-  const marble = await new THREE.TextureLoader().loadAsync('./assets/textura-hope-igualada.jpg');
+  const artwork = await loadArtwork('./Logo-sin-destellos.png');
+  const marble = await new THREE.TextureLoader().loadAsync('./textura-hope-igualada.jpg');
   marble.colorSpace = THREE.SRGBColorSpace;
   marble.anisotropy = 8;
   marble.wrapS = marble.wrapT = THREE.MirroredRepeatWrapping;
   marble.needsUpdate = true;
   const glassEnv = pmrem.fromEquirectangular(softReflection(marble.image)).texture;
-  const font = await loadFont('./assets/aerospace.regular.otf');
+  const font = await loadFont('./aerospace.regular.otf');
   logoRig.add(buildLogo(artwork, { size: LAYOUT.logoSize, depth: LAYOUT.depthLogo, wallTexture: marble }));
   title = buildTitle(font, { marble, glassEnv }, [
     { text: 'PROJECT', kind: 'glass', bend: 8.0, dy: 0.15 },
